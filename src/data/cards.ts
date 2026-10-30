@@ -1,0 +1,161 @@
+import type { CardDef } from '../engine/types';
+
+export const TERMINAL_ID = 'terminal';
+
+export const TERMINAL_CARD: CardDef = {
+  id: TERMINAL_ID,
+  name: "Terminal d'export",
+  icon: '🛰️',
+  rarity: 'common',
+  tags: ['commerce'],
+  behavior: { type: 'terminal' },
+  summary: 'Vend toutes les ressources reçues.',
+};
+
+/** The 15 playable cards. */
+export const CARD_LIST: CardDef[] = [
+  // Common
+  {
+    id: 'asteroid_drill',
+    name: 'Foreuse à astéroïdes',
+    icon: '⛏️',
+    rarity: 'common',
+    tags: ['mining'],
+    behavior: { type: 'source', resource: 'ore', amount: 1 },
+    summary: '+1 Minerai/tick',
+  },
+  {
+    id: 'solar_panel',
+    name: 'Panneau solaire',
+    icon: '☀️',
+    rarity: 'common',
+    tags: ['energy'],
+    behavior: { type: 'source', resource: 'energy', amount: 1 },
+    summary: '+1 Énergie/tick',
+  },
+  {
+    id: 'conveyor',
+    name: 'Convoyeur',
+    icon: '🛤️',
+    rarity: 'common',
+    tags: ['logistics'],
+    behavior: { type: 'logistics', rate: 3 },
+    summary: 'Fait suivre tout, débit 3',
+  },
+  {
+    id: 'foundry',
+    name: 'Fonderie',
+    icon: '🏭',
+    rarity: 'common',
+    tags: ['industry'],
+    behavior: { type: 'converter', inputs: { ore: 2, energy: 1 }, outputs: { alloy: 1 } },
+    summary: '2 Minerai + 1 Énergie → 1 Alliage',
+  },
+  {
+    id: 'buffer_silo',
+    name: 'Silo tampon',
+    icon: '🛢️',
+    rarity: 'common',
+    tags: ['logistics'],
+    behavior: { type: 'logistics', rate: 2 },
+    inboxCapacity: 12,
+    throughput: 2,
+    summary: 'Stocke 12, débit 2',
+  },
+  // Uncommon
+  {
+    id: 'deep_drill',
+    name: 'Foreuse profonde',
+    icon: '🕳️',
+    rarity: 'uncommon',
+    tags: ['mining'],
+    behavior: { type: 'converter', inputs: { energy: 1 }, outputs: { ore: 3 } },
+    summary: '1 Énergie → 3 Minerai',
+  },
+  {
+    id: 'lab',
+    name: 'Laboratoire',
+    icon: '🧪',
+    rarity: 'uncommon',
+    tags: ['tech'],
+    behavior: { type: 'converter', inputs: { energy: 2 }, outputs: { data: 1 } },
+    summary: '2 Énergie → 1 Données',
+  },
+  {
+    id: 'splitter',
+    name: 'Répartiteur',
+    icon: '🔀',
+    rarity: 'uncommon',
+    tags: ['logistics'],
+    behavior: { type: 'logistics', rate: 3, split: true },
+    summary: 'Alterne sortie et sortie +90° (horaire)',
+  },
+  {
+    id: 'control_relay',
+    name: 'Relais de contrôle',
+    icon: '📡',
+    rarity: 'uncommon',
+    tags: ['tech'],
+    behavior: { type: 'passive', effects: [{ kind: 'adjacentSourceBonus', amount: 1 }] },
+    summary: 'Sources adjacentes : +1 production',
+  },
+  {
+    id: 'broker',
+    name: 'Courtier',
+    icon: '💱',
+    rarity: 'uncommon',
+    tags: ['commerce'],
+    behavior: { type: 'passive', effects: [{ kind: 'terminalAdjacentSaleBonus', amount: 1 }] },
+    summary: 'Adjacent au Terminal : +1 crédit/unité vendue',
+  },
+  // Rare
+  {
+    id: 'fusion_reactor',
+    name: 'Réacteur à fusion',
+    icon: '☢️',
+    rarity: 'rare',
+    tags: ['energy'],
+    behavior: { type: 'source', resource: 'energy', amount: 3 },
+    summary: '+3 Énergie/tick',
+  },
+  {
+    id: 'module_assembler',
+    name: 'Assembleur de modules',
+    icon: '🤖',
+    rarity: 'rare',
+    tags: ['industry', 'tech'],
+    behavior: { type: 'converter', inputs: { alloy: 2, data: 1 }, outputs: { module: 1 } },
+    summary: '2 Alliage + 1 Données → 1 Module',
+  },
+  {
+    id: 'quantum_amplifier',
+    name: 'Amplificateur quantique',
+    icon: '🌀',
+    rarity: 'rare',
+    tags: ['tech'],
+    behavior: { type: 'logistics', rate: 2, multiplier: 2 },
+    summary: 'Ressources reçues ×2, 2 entrées/tick',
+  },
+  {
+    id: 'cargo_drone',
+    name: 'Drone cargo',
+    icon: '🛸',
+    rarity: 'rare',
+    tags: ['logistics'],
+    behavior: { type: 'logistics', rate: 3, range: 2 },
+    summary: 'Envoie à 2 cases (saute la voisine)',
+  },
+  {
+    id: 'export_contract',
+    name: "Contrat d'exportation",
+    icon: '📜',
+    rarity: 'rare',
+    tags: ['commerce'],
+    behavior: { type: 'passive', effects: [{ kind: 'saleMultiplier', resource: 'alloy', factor: 2 }] },
+    summary: 'Alliages vendus ×2',
+  },
+];
+
+export const CARDS: Record<string, CardDef> = Object.fromEntries(
+  [...CARD_LIST, TERMINAL_CARD].map((c) => [c.id, c]),
+);
